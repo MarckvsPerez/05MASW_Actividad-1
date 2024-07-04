@@ -273,6 +273,25 @@ function moverCartaAlTapete(
   mazoDestino.push(carta);
   setContador(contadorDestino, mazoDestino.length);
   incContador(contMovimientos);
+
+
+verificarJuegoTerminado();
+
+}
+
+
+function verificarJuegoTerminado() {
+
+  const totalCartas = palos.length * numeros.length;
+  const cartasEnReceptores =
+    mazoReceptor1.length +
+    mazoReceptor2.length +
+    mazoReceptor3.length +
+    mazoReceptor4.length;
+
+  if (cartasEnReceptores == totalCartas) {
+    mostrarPopup();
+  }
 }
 
 function configurarEventosTapetes(tapetes) {
@@ -321,18 +340,4 @@ function cerrarPopup() {
     popup.style.display = 'none';
     document.body.removeChild(popup);
   }
-}
-
-// Función que verifica si el juego ha terminado
-function verificarJuegoTerminado() {
-  // Suponiendo que hay una función que verifica si todas las cartas están en los tapetes receptores
-  const todasLasCartasEnReceptores = true; // Aquí debe ir la lógica real del juego
-
-  if (todasLasCartasEnReceptores) {
-    mostrarPopup();
-  }
-}
-
-// Ejemplo de llamada a verificarJuegoTerminado cuando corresponda
-// Esta llamada debería hacerse en el contexto adecuado del juego, por ejemplo, después de mover una carta
-verificarJuegoTerminado();
+};
