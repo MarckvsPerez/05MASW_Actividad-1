@@ -14,6 +14,9 @@
 		Invocar a los ficheros de estilos y al JavaScript donde proceda
         -->
     <link rel="stylesheet" href="./css/solitario.css" />
+    <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
   </head>
 
   <body>
@@ -76,9 +79,14 @@
 
       <!-- Botón de reset que reinicia todo: partida, contadores de tiempo, de movimientos, ... -->
       <div class="controles">
-        <button id="reset" class="btn btn-danger">Reiniciar</button>
+        <button id="reset" class="btn btn-primary">Reiniciar</button>
       </div>
     </div>
+
+    <audio id="musica_fondo" loop>
+      <source src="./music/musica_fondo.mp3" type="audio/mpeg">
+      Tu navegador no soporta el elemento de audio
+    </audio>
     <!-- class="central" -->
     <script src="./js/solitario.js"></script>
   </body>

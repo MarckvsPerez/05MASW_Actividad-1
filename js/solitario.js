@@ -4,7 +4,7 @@
 let palos = ["viu", "cua", "hex", "cir"];
 
 // Array de número de cartas
-let numeros = [11, 12];
+let numeros = [6,7,8,9,10,11,12];
 
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
 let paso = 5;
@@ -39,13 +39,18 @@ let contTiempo = document.getElementById("contador_tiempo"); // span cuenta tiem
 let segundos = 0; // cuenta de segundos
 let temporizador = null; // manejador del temporizador
 
+let musicaFondo = document.getElementById("musica_fondo");
+
 /***** FIN DECLARACIÓN DE VARIABLES GLOBALES *****/
 
 // Rutina asociada a boton reset
 document.getElementById("reset").onclick = comenzarJuego;
 
 // El juego arranca ya al cargar la página: no se espera a reiniciar
-window.onload = comenzarJuego;
+window.onload = () => {
+  comenzarJuego();
+  reproducirMusica();
+};
 
 // Desarrollo del comienzo de juego
 function comenzarJuego() {
@@ -70,7 +75,7 @@ function comenzarJuego() {
   for (let palo of palos) {
     for (let numero of numeros) {
       let carta = document.createElement("img");
-      carta.src = `../imagenes/baraja/${numero}-${palo}.png`;
+      carta.src = `./imagenes/baraja/${numero}-${palo}.png`;
       carta.classList.add("carta");
       carta.setAttribute("id", `${numero}-${palo}`);
       carta.setAttribute("data-palo", palo);
@@ -98,6 +103,7 @@ function comenzarJuego() {
 
   // Arrancar el conteo de tiempo
   arrancarTiempo();
+  reproducirMusica();
 }
 
 function arrancarTiempo() {
@@ -152,6 +158,12 @@ function decContador(contador) {
 
 function setContador(contador, valor) {
   contador.textContent = valor;
+}
+
+function reproducirMusica() {
+  if (musicaFondo.paused) {
+    musicaFondo.play();
+  }
 }
 
 function al_mover(e) {
