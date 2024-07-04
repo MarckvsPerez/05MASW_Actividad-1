@@ -4,7 +4,7 @@
 let palos = ["viu", "cua", "hex", "cir"];
 
 // Array de número de cartas
-let numeros = [6,7,8,9,10,11,12];
+let numeros = [10,11,12];
 
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
 let paso = 5;
@@ -302,3 +302,37 @@ function limpiarTapete(tapete) {
   const imagenes = tapete.querySelectorAll("img");
   imagenes.forEach((img) => img.remove());
 }
+
+function mostrarPopup() {
+  const popup = document.createElement('div');
+  popup.classList.add('popup');
+  popup.innerHTML = `
+    <h2>¡Has ganado!</h2>
+    <button onclick="cerrarPopup()">Cerrar</button>
+  `;
+  document.body.appendChild(popup);
+  popup.style.display = 'block';
+}
+
+// Función para cerrar el pop-up
+function cerrarPopup() {
+  const popup = document.querySelector('.popup');
+  if (popup) {
+    popup.style.display = 'none';
+    document.body.removeChild(popup);
+  }
+}
+
+// Función que verifica si el juego ha terminado
+function verificarJuegoTerminado() {
+  // Suponiendo que hay una función que verifica si todas las cartas están en los tapetes receptores
+  const todasLasCartasEnReceptores = true; // Aquí debe ir la lógica real del juego
+
+  if (todasLasCartasEnReceptores) {
+    mostrarPopup();
+  }
+}
+
+// Ejemplo de llamada a verificarJuegoTerminado cuando corresponda
+// Esta llamada debería hacerse en el contexto adecuado del juego, por ejemplo, después de mover una carta
+verificarJuegoTerminado();
