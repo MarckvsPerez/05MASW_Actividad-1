@@ -4,7 +4,7 @@
 let palos = ["viu", "cua", "hex", "cir"];
 
 // Array de número de cartas
-let numeros = [11, 12];
+let numeros = [12];
 
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
 let paso = 5;
@@ -129,6 +129,13 @@ function arrancarTiempo() {
   temporizador = setInterval(hms, 1000);
 }
 
+function finalizarTiempo() {
+  if (temporizador) {
+    clearInterval(temporizador);
+    temporizador = null;
+  }
+}
+
 function barajar(mazo) {
   for (let i = mazo.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -140,14 +147,22 @@ function barajar(mazo) {
 function cargarTapeteInicial(mazo) {
   let top = 0;
   let left = 0;
-  for (let carta of mazo) {
+  mazo.forEach((carta, index) => {
     carta.style.position = "absolute";
     carta.style.top = `${top}px`;
     carta.style.left = `${left}px`;
+    carta.style.transform = "";
+    if (index === mazo.length - 1) {
+      carta.draggable = true;
+      carta.ondragstart = al_mover;
+    } else {
+      carta.draggable = false;
+      carta.ondragstart = null;
+    }
     tapeteInicial.appendChild(carta);
     top += paso;
     left += paso;
-  }
+  });
   setContador(contInicial, mazo.length);
 }
 
@@ -236,6 +251,16 @@ function soltar(e) {
   } else if (tapeteDestino && tapeteDestino.id === "sobrantes") {
     moverCartaAlTapete(carta, tapeteDestino, mazoSobrantes, contSobrantes);
   }
+
+  if (mazoInicial.length === 0) {
+    mazoInicial = mazoSobrantes;
+    mazoSobrantes = [];
+
+    mazoInicial = barajar(mazoInicial);
+    cargarTapeteInicial(mazoInicial);
+
+    setContador(contSobrantes, mazoSobrantes.length);
+  }
 }
 
 function esMovimientoValido(ultimaCarta, nuevaCarta) {
@@ -263,9 +288,21 @@ function moverCartaAlTapete(
   if (tapeteOrigen.id === "inicial") {
     mazoInicial.pop();
     setContador(contInicial, mazoInicial.length);
+
+    if (mazoInicial.length > 0) {
+      let nuevaUltimaCarta = mazoInicial[mazoInicial.length - 1];
+      nuevaUltimaCarta.draggable = true;
+      nuevaUltimaCarta.ondragstart = al_mover;
+    }
   } else if (tapeteOrigen.id === "sobrantes") {
     mazoSobrantes.pop();
     setContador(contSobrantes, mazoSobrantes.length);
+
+    if (mazoSobrantes.length > 0) {
+      let nuevaUltimaCarta = mazoSobrantes[mazoSobrantes.length - 1];
+      nuevaUltimaCarta.draggable = true;
+      nuevaUltimaCarta.ondragstart = al_mover;
+    }
   }
 
   carta.style.position = "absolute";
@@ -289,6 +326,7 @@ function verificarJuegoTerminado() {
     mazoReceptor4.length;
 
   if (cartasEnReceptores == totalCartas) {
+    finalizarTiempo();
     mostrarPopup();
   }
 }
@@ -324,8 +362,14 @@ function limpiarTapete(tapete) {
 function mostrarPopup() {
   const popup = document.createElement("div");
   popup.classList.add("popup");
+
+  console.log(contMovimientos.textContent);
+  console.log(contTiempo.textContent);
+
   popup.innerHTML = `
     <h2>¡Has ganado!</h2>
+    <h3>Movimientos: ${contMovimientos.textContent}</h3>
+    <h3>Tiempo: ${contTiempo.textContent}</h3>
     <button onclick="cerrarPopup()">Cerrar</button>
   `;
   document.body.appendChild(popup);
