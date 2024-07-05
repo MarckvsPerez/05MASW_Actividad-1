@@ -4,7 +4,7 @@
 let palos = ["viu", "cua", "hex", "cir"];
 
 // Array de número de cartas
-let numeros = [10,11,12];
+let numeros = [11, 12];
 
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
 let paso = 5;
@@ -45,12 +45,15 @@ let musicaFondo = document.getElementById("musica_fondo");
 
 // Rutina asociada a boton reset
 document.getElementById("reset").onclick = comenzarJuego;
+document.getElementById("empezar").onclick = Iniciar;
 
-// El juego arranca ya al cargar la página: no se espera a reiniciar
-window.onload = () => {
+function Iniciar() {
+  const juego = document.getElementById("central");
+  const inicio = document.getElementById("inicio");
+  inicio.style.display = "none";
+  juego.style.display = "block";
   comenzarJuego();
-  reproducirMusica();
-};
+}
 
 // Desarrollo del comienzo de juego
 function comenzarJuego() {
@@ -274,14 +277,10 @@ function moverCartaAlTapete(
   setContador(contadorDestino, mazoDestino.length);
   incContador(contMovimientos);
 
-
-verificarJuegoTerminado();
-
+  verificarJuegoTerminado();
 }
 
-
 function verificarJuegoTerminado() {
-
   const totalCartas = palos.length * numeros.length;
   const cartasEnReceptores =
     mazoReceptor1.length +
@@ -323,21 +322,21 @@ function limpiarTapete(tapete) {
 }
 
 function mostrarPopup() {
-  const popup = document.createElement('div');
-  popup.classList.add('popup');
+  const popup = document.createElement("div");
+  popup.classList.add("popup");
   popup.innerHTML = `
     <h2>¡Has ganado!</h2>
     <button onclick="cerrarPopup()">Cerrar</button>
   `;
   document.body.appendChild(popup);
-  popup.style.display = 'block';
+  popup.style.display = "block";
 }
 
 // Función para cerrar el pop-up
 function cerrarPopup() {
-  const popup = document.querySelector('.popup');
+  const popup = document.querySelector(".popup");
   if (popup) {
-    popup.style.display = 'none';
+    popup.style.display = "none";
     document.body.removeChild(popup);
   }
-};
+}

@@ -11,13 +11,14 @@
 */
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: linear-gradient(135deg, #f0f0f0, #c0c0c0);
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  padding: 2rem;
 }
 
 .central {
@@ -27,6 +28,8 @@ body {
   border-radius: 10px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  width: 100%;
+  display: none;
 }
 
 .contador {
@@ -60,7 +63,7 @@ div#mesa {
 }
 
 div.controles {
-  width: 100vw;
+  width: "100%";
   display: flex;
   justify-content: center;
   margin-top: 20px;
